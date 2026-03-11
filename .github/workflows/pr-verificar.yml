@@ -1,0 +1,26 @@
+name: Pull Requests - Verification
+
+on:
+  pull_request:
+    branches: ["main"]
+
+env:
+  DOTNET_VERSION: '10.0.103'
+  BUILD_CONFIGURATION: 'Release'
+
+jobs:
+  build:
+    name: "Job Pull request Verification"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: $DOTNET_VERSION
+
+      - name: Build with dotnet
+        run: dotnet build --configuration $BUILD_CONFIGURATION
